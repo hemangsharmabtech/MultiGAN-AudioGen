@@ -26,9 +26,7 @@ project-root/
 ├── models/
 │   ├── vqvae_encoder.pth      # Saved encoder
 │   ├── vqvae_decoder.pth      # Saved decoder
-│   ├── vqvae_codebook.pth     # Saved codebook
-│   ├── encoder.joblib         # Saved encoder (joblib)
-│   └── decoder.joblib         # Saved decoder (joblib)
+│   └── vqvae_codebook.pth     # Saved codebook
 ├── train_vqvae.py             # Training script
 ├── inference_vqvae.py         # Inference/demo script
 ├── vqvae_model.py             # VQ-VAE model definition
@@ -51,17 +49,18 @@ After training, the encoder, decoder, and codebook will be saved separately insi
 
 ## 📦 Loading Model Components
 
-### Option 1: Load VQVAE Components
-
 ```python
 import torch
+import torch.nn as nn
 from vqvae_model import VQVAE
 
 # Define the input dimension (e.g., mel + mfcc)
 input_dim = 93
+
+# Instantiate model
 model = VQVAE(input_dim=input_dim)
 
-# Load saved weights
+# Load model weights
 model.encoder.load_state_dict(torch.load("models/vqvae_encoder.pth"))
 model.decoder.load_state_dict(torch.load("models/vqvae_decoder.pth"))
 model.codebook.load_state_dict(torch.load("models/vqvae_codebook.pth"))
@@ -70,62 +69,14 @@ model.eval()
 print("VQ-VAE model components loaded successfully ✅")
 ```
 
-### Option 2: Load Encoder and Decoder from Joblib
+---
 
-```python
-import torch.nn as nn
-import joblib
+## 📊 Dependencies
 
-input_dim = 93
+Install the required dependencies using:
 
-# Load saved encoder
-encoder = nn.Sequential(
-    nn.Linear(input_dim, 8192),
-    nn.ReLU(),
-    nn.Linear(8192, 7168),
-    nn.ReLU(),
-    nn.Linear(7168, 6144),
-    nn.ReLU(),
-    nn.Linear(6144, 5120),
-    nn.ReLU(),
-    nn.Linear(5120, 4096),
-    nn.ReLU(),
-    nn.Linear(4096, 3072),
-    nn.ReLU(),
-    nn.Linear(3072, 2048),
-    nn.ReLU(),
-    nn.Linear(2048, 1024),
-    nn.ReLU()
-)
-
-encoder.load_state_dict(joblib.load(r"C:\\Users\\cl502_11\\MG\\Models\\VQ-VAE\\Autoencoder\\encoder.joblib"))
-encoder.eval()
-
-# Load saved decoder
-decoder = nn.Sequential(
-    nn.Linear(1024, 2048),
-    nn.ReLU(),
-    nn.Linear(2048, 3072),
-    nn.ReLU(),
-    nn.Linear(3072, 4096),
-    nn.ReLU(),
-    nn.Linear(4096, 5120),
-    nn.ReLU(),
-    nn.Linear(5120, 6144),
-    nn.ReLU(),
-    nn.Linear(6144, 7168),
-    nn.ReLU(),
-    nn.Linear(7168, 8192),
-    nn.ReLU(),
-    nn.Linear(8192, input_dim)
-)
-
-decoder.load_state_dict(joblib.load(r"C:\\Users\\cl502_11\\MG\\Models\\VQ-VAE\\Autoencoder\\decoder.joblib"))
-decoder.eval()
-
-print("Encoder and Decoder loaded from joblib successfully ✅")
+```bash
+pip install torch numpy matplotlib tqdm joblib
 ```
 
 ---
-
-
