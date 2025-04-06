@@ -1,33 +1,35 @@
-
-```markdown
 # VQ-VAE for Voice Conversion 🎧
 
-This repository contains a Vector Quantized Variational Autoencoder (VQ-VAE) implementation tailored for voice conversion tasks. It leverages Mel spectrograms and MFCC features for learning discrete latent audio representations.
+This repository contains a **Vector Quantized Variational Autoencoder (VQ-VAE)** implementation tailored for voice conversion tasks. It leverages **Mel spectrograms** and **MFCC features** to learn discrete latent representations of audio data.
 
 ---
 
 ## 🧠 Architecture
 
 - **Encoder**: Compresses input spectrograms into a latent space.
-- **Codebook**: Vector quantization of latent space to discrete tokens.
+- **Codebook**: Performs vector quantization to convert continuous latent space into discrete tokens.
 - **Decoder**: Reconstructs audio features from quantized representations.
-- Trained with **reconstruction loss**, **VQ loss**, and **commitment loss**.
+- The model is trained using a combination of:
+  - **Reconstruction Loss**
+  - **VQ Loss**
+  - **Commitment Loss**
 
 ---
 
 ## 📁 Directory Structure
 
 ```
+project-root/
 ├── data/
-│   ├── mel/                # Mel spectrograms (.npy)
-│   └── mfcc/               # MFCC features (.npy)
+│   ├── mel/                   # Mel spectrograms (.npy)
+│   └── mfcc/                  # MFCC features (.npy)
 ├── models/
-│   ├── vqvae_encoder.pth
-│   ├── vqvae_decoder.pth
-│   └── vqvae_codebook.pth
-├── train_vqvae.py
-├── inference_vqvae.py
-├── vqvae_model.py
+│   ├── vqvae_encoder.pth      # Saved encoder
+│   ├── vqvae_decoder.pth      # Saved decoder
+│   └── vqvae_codebook.pth     # Saved codebook
+├── train_vqvae.py             # Training script
+├── inference_vqvae.py         # Inference/demo script
+├── vqvae_model.py             # VQ-VAE model definition
 └── README.md
 ```
 
@@ -35,25 +37,29 @@ This repository contains a Vector Quantized Variational Autoencoder (VQ-VAE) imp
 
 ## 🚀 Training
 
+Run the following command to train the model:
+
 ```bash
 python train_vqvae.py
 ```
 
-This will save the encoder, decoder, and codebook separately under `models/`.
+After training, the encoder, decoder, and codebook will be saved separately inside the `models/` folder.
 
 ---
 
 ## 📦 Loading Model Components
 
+You can load individual components of the trained model like this:
+
 ```python
 import torch
 from vqvae_model import VQVAE
 
-# Define input dimension (e.g., mel + mfcc)
+# Define the input dimension (e.g., mel + mfcc)
 input_dim = 93
 model = VQVAE(input_dim=input_dim)
 
-# Load weights
+# Load saved weights
 model.encoder.load_state_dict(torch.load("models/vqvae_encoder.pth"))
 model.decoder.load_state_dict(torch.load("models/vqvae_decoder.pth"))
 model.codebook.load_state_dict(torch.load("models/vqvae_codebook.pth"))
@@ -69,6 +75,3 @@ print("VQ-VAE model components loaded successfully ✅")
 ```bash
 pip install torch numpy matplotlib tqdm
 ```
-
----
-
