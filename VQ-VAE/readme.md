@@ -72,7 +72,3 @@ pip install torch numpy matplotlib tqdm
 
 ---
 
-## ✨ Author
-
-Built with curiosity and experimentation by [Your Name].
-```
