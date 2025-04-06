@@ -92,8 +92,7 @@ This GAN helps synthesize new audio content from scratch by decoding generated l
     G --> H[Latent Vectors]
     H --> I[Decoder (VQ-VAE)]
     I --> J[Reconstructed Audio]
-```
-```
+
 ---
 
 ## 🚀 Future Work
