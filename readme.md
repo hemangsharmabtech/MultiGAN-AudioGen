@@ -83,8 +83,6 @@ This GAN helps synthesize new audio content from scratch by decoding generated l
 
 ## 🔁 How It All Comes Together
 
-```mermaid
-graph LR
     A[Raw Audio (WAV)] --> B[Preprocessing (Mono, Trim, Normalize)]
     B --> C[UVR5 Separation]
     C --> D[Mel & MFCC Extraction]
