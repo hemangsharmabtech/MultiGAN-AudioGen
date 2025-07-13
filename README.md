@@ -11,11 +11,15 @@ MultiGAN-AudioGen is a deep learning project that combines CycleGAN, MelGAN, VQ-
 - CycleGAN for domain/style transformation  
 - MelGAN for spectrogram-to-waveform conversion  
 - VanillaGAN for latent space generation  
-- GANs for modeling and sampling from latent space  
+- GANs for modeling and sampling from latent space
+  
 ---
+
 🎧 Step 1: Data Collection  
 High-quality `.wav` audio files were sourced using various open-source tools available across the internet (such as YouTube downloaders). This ensured a wide range of musical styles and vocal types for robust training.
+
 ---
+
 🛠️ Step 2: Preprocessing  
 All audio files underwent consistent and clean processing:  
 
@@ -62,8 +66,10 @@ Once the VQ-VAE was trained, the discrete latent vectors were used as inputs to 
 
 - **Generator:** Learns to generate realistic latent representations mimicking VQ-VAE’s latent space  
 - **Discriminator:** Differentiates between real encoded latent vectors and generated ones  
-This GAN helps synthesize new audio content from scratch by decoding generated latent vectors via the VQ-VAE decoder.  
+This GAN helps synthesize new audio content from scratch by decoding generated latent vectors via the VQ-VAE decoder.
+ 
 ---
+
 🔁 How It All Comes Together  
 A[Raw Audio (WAV)] --> B[Preprocessing (Mono, Trim, Normalize)]  
 B --> C[UVR5 Separation]  
@@ -74,6 +80,7 @@ F --> G[VanillaGAN Generator]
 G --> H[Latent Vectors]  
 H --> I[Decoder (VQ-VAE)]  
 I --> J[Reconstructed Audio via MelGAN]  
+
 ---
 🚀 Future Work  
 - Expand dataset diversity for broader genre coverage  
